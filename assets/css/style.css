@@ -54,14 +54,14 @@ li {
 }
 
 .article {
-  border-bottom: 2px solid #9C9C7A;
+  border-bottom: 2px solid #4d4d4d;
   margin-bottom: 20px;
   padding-bottom: 15px;
 }
 
 #articles {
   max-height: 295px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .img_article {
@@ -93,7 +93,8 @@ li {
 }
 
 #messages li:nth-child(odd) {
-  background: #f9b640;
+  background: #4d4d4d;
+  color: #f7931a;
 }
 
 .send-message-wrapper {

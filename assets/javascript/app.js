@@ -41,7 +41,7 @@ var app = {
 
   newsModule : {
 
-    apiKey: apiKey,
+    apiKey: apiKey.news,
     baseURL: "https://newsapi.org/v2/everything?q=", 
 
     topics: [
@@ -69,8 +69,9 @@ var app = {
       // listens for topic link selection, then renders appropriate articles
       $(".topic-tab").on("click", function() {
 
-        topic = $(this).text().toLowerCase();
+        const topic = $(this).text().toLowerCase();
         app.newsModule.artDisplay(topic);
+        app.aniModule.renderScreen(topic);
 
       });
 
@@ -174,18 +175,115 @@ var app = {
 
       }
 
+  },
+
+  aniModule: {
+
+    presets: {
+
+      default: {
+        primary: "f7931a",
+        secondary: "4d4d4d",
+        tertiary: "F0F0F0",
+        quaternary: "FFFFFF",
+        navText: "",
+        mainText: "",
+        altChatText: "",
+        userText: ""
+      },
+
+      bitcoin: {
+        primary: "f7931a",
+        secondary: "4d4d4d",
+        tertiary: "F0F0F0",
+        quaternary: "FFFFFF",
+        navText: "",
+        mainText: "",
+        altChatText: "",
+        userText: ""
+      },
+
+      ethereum: {
+        primary: "3C3C3D",
+        secondary: "C99D66",
+        tertiary: "ECF0F1",
+        quaternary: "FFFFFF",
+        navText: "",
+        mainText: "",
+        altChatText: "",
+        userText: ""
+      },
+
+      ripple: {
+        primary: "007a7b",
+        secondary: "0084a6",
+        tertiary: "90dbcc",
+        quaternary: "d4fff6",
+        navText: "",
+        mainText: "",
+        altChatText: "",
+        userText: ""
+      },
+
+      dogecoin: {
+        primary: "e1b303",
+        secondary: "000000",
+        tertiary: "eeeeee",
+        quaternary: "cb9800",
+        navText: "",
+        mainText: "",
+        altChatText: "",
+        userText: ""
+      },
+      
     },
 
-    startup : function(){
+    init: function() {
 
-      this.userModule.init();
-      this.priceHistoryModule.init();
-      this.pollModule.init();
-      this.newsModule.init();
-      this.chatModule.init();
+      console.log("Animation Module loaded");
 
-    }
+      app.aniModule.renderScreen("start");
+
+    },
+
+    renderScreen: function(x) {
+
+      if(x === "start") {
+
+        console.log("no welcome screen yet present, default color scheme already in place");
+
+      } else if(app.aniModule.presets[x] != undefined) {
+
+        console.log(x, "running screen render");
+
+        $("body").attr("style", "background-color: #" + app.aniModule.presets[x].tertiary + ";");
+        $(".navbar").attr("style", "background-color: #" + app.aniModule.presets[x].primary + ";");
+        $(".section").attr("style", "background-color: #" + app.aniModule.presets[x].quaternary + ";");
+        $("#messages li:nth-child(odd)").attr("style", "background-color: #" + app.aniModule.presets[x].secondary + "; color: #" + app.aniModule.presets[x].primary + ";");
+        $("#footer").attr("style", "background-color: #" + app.aniModule.presets[x].primary + ";");
+
+      } else {
+
+        console.log(x + "is not an available preset");
+        app.aniModule.renderScreen("default");
+
+      }
+
+    } 
+
+  },
+
+  startup : function(){
+
+    this.userModule.init();
+    this.priceHistoryModule.init();
+    this.pollModule.init();
+    this.newsModule.init();
+    this.chatModule.init();
+    this.aniModule.init();
 
   }
+
+};
 
 app.startup(); // main entry point of this application
