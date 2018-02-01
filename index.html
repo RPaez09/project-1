@@ -16,22 +16,89 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-expand-lg navbar-inverse">
+    
+    <header>
+        <nav>
+            <div>
+                <a> <img src="assets/images/crypto.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+                <strong>Crypto ClashBoard</strong></a>
+            </div>
+            <div>
+                <a href="#" class="topic-tab" data-coin="BTC">Bitcoin</a>
+                <div>
+                    <a>Link 1</a>
+                    <a>Link 2</a>
+                    <a>Link 3</a>
+                    <a>Link 4</a>
+                    <a>Link 5</a>
+                    <a>Link 6</a>
+                </div>
+            </div>
+                <div>
+                <a href="#" class="topic-tab" data-coin="ETH">Ethereum</a>
+                <div>
+                    <a>Link 1</a>
+                    <a>Link 2</a>
+                    <a>Link 3</a>
+                    <a>Link 4</a>
+                    <a>Link 5</a>
+                    <a>Link 6</a>
+                </div>
+                </div>
+                <div>
+                <a href="#" class="topic-tab" data-coin="RPX">Ripple</a>
+                <div>
+                    <a>Link 1</a>
+                    <a>Link 2</a>
+                    <a>Link 3</a>
+                    <a>Link 4</a>
+                    <a>Link 5</a>
+                    <a>Link 6</a>
+                </div>
+            </div>
+                <div>
+                <a href="#" class="topic-tab" data-coin="DOGE">Dogecoin</a>
+                <div>
+                    <a>Link 1</a>
+                    <a>Link 2</a>
+                    <a>Link 3</a>
+                    <a>Link 4</a>
+                    <a>Link 5</a>
+                    <a>Link 6</a>
+                </div>
+            </div>
+            <div>
+                <a href="crypto-compare" target="_blank">CryptoCompare</a>
+                <div>
+                    <a>Link 1</a>
+                    <a>Link 2</a>
+                    <a>Link 3</a>
+                    <a>Link 4</a>
+                    <a>Link 5</a>
+                    <a>Link 6</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- <nav class="navbar navbar-expand-md navbar-expand-lg navbar-inverse">
         <a> <img src="assets/images/crypto.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
             <strong>Crypto ClashBoard</strong></a>
         <span style="float:right">
-            <a href="#" class="topic-tab">Bitcoin</a>
-            <a href="#" class="topic-tab">Ethereum</a>
-            <a href="#" class="topic-tab">Ripple</a>
-            <a href="#" class="topic-tab">Dogecoin</a>
+            <a href="#" class="topic-tab" data-coin="BTC">Bitcoin</a>
+            <a href="#" class="topic-tab" data-coin="ETH">Ethereum</a>
+            <a href="#" class="topic-tab" data-coin="RPX">Ripple</a>
+            <a href="#" class="topic-tab" data-coin="DOGE">Dogecoin</a>
             <a href="crypto-compare" target="_blank">CryptoCompare</a>
         </span>
-    </nav>
+    </nav> -->
+
     <div class="container-fluid" id="main-app">
         <div class="row">
             <div class="col-md-7">
                 <div id="ticker" class="section section-ticker">
                     <h3 class="section-header">Price History</h3>
+                    <div id="price-chart"></div>
                 </div>
             </div>
             <div class="col-md-5">
@@ -113,6 +180,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> <!--Bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> <!--socket io-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.2/d3.min.js"></script><!-- D3 -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script><!-- plotly -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script><!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script><!-- moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenLite.min.js"></script><!-- greensock tweenlite library -->
