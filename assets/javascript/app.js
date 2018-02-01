@@ -33,7 +33,7 @@ var app = {
 
     getPrices: function( ){
 
-      var queryURL = 'http://localhost:8080/api/history/'+ this.activeCurrency;
+      var queryURL = 'http://hidden-savannah-78793.herokuapp.com/api/history/'+ this.activeCurrency;
 
       $.ajax({
         url: queryURL,
