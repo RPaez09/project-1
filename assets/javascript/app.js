@@ -136,44 +136,39 @@ var app = {
        labels: ["Bitcoin","Doge","Ripple","Ethereum"],
        values: Object.getOwnPropertyNames(state).map(x => state[x]),
        type:'pie'
-     };
-     data = [data];
+      };
+      data = [data];
 
-     var layout = {
-      title: "Curent Polls",
-      showlegend: true,
-      height: 290,
-      width:350,
-      autosize: true,
-      margin: { t: 30 , l: 50 , r: 20 , b: 50 }
+      var layout = {
+        title: "Curent Polls",
+        showlegend: true,
+        height: 290,
+        width:350,
+        autosize: true,
+        margin: { t: 30 , l: 50 , r: 20 , b: 50 }
+      }
+
+      var options = {
+        displayModeBar: false,
+        scrollZoom: false
+      }
+
+      Plotly.newPlot( 'poll-chart', data , layout , options );
     }
+ 
+  },
 
-    var options = {
-      displayModeBar: false,
-      scrollZoom: false
-    }
+  newsModule : {
 
-    Plotly.newPlot( 'poll-chart', data , layout , options );
-  }
-
-<<<<<<< HEAD
     apiKey: apiKey.news,
     baseURL: "https://newsapi.org/v2/everything?language=en&q=", 
-=======
-},
->>>>>>> upstream/master
 
-newsModule : {
-
-  apiKey: apiKey.news,
-  baseURL: "https://newsapi.org/v2/everything?q=", 
-
-  topics: [
-  "bitcoin",
-  "ethereum",
-  "ripple",
-  "dogecoin"
-  ],
+    topics: [
+    "bitcoin",
+    "ethereum",
+    "ripple",
+    "dogecoin"
+    ],
 
     // stores articles pulled from ajax call as properties under the topic name
     articles: {},
@@ -202,8 +197,7 @@ newsModule : {
 
       const toDate = moment().format("YYYY-MM-DD"),
             fromDate = moment().subtract(14, "days").format("YYYY-MM-DD");
-
-      const queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&sortBy=relevancy&pageSize=10&apiKey=" + app.newsModule.apiKey;
+            queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&sortBy=relevancy&pageSize=10&apiKey=" + app.newsModule.apiKey;
 
       $.ajax({
         url: queryURL,
@@ -348,10 +342,10 @@ newsModule : {
               b = $("#messages li:nth-child(odd)"),
               c = $("#footer");
 
-        TweenLite.to(a, 1, {backgroundColor: app.aniModule.presets[x].primary});
-        TweenLite.to(b, 1, {backgroundColor: app.aniModule.presets[x].primary,
+        TweenMax.to(a, 1, {backgroundColor: app.aniModule.presets[x].primary});
+        TweenMax.to(b, 1, {backgroundColor: app.aniModule.presets[x].primary,
                             color: app.aniModule.presets[x].secondary});
-        TweenLite.to(c, 1, {backgroundColor: app.aniModule.presets[x].primary,
+        TweenMax.to(c, 1, {backgroundColor: app.aniModule.presets[x].primary,
                             color: app.aniModule.presets[x].secondary});
 
       } else {
