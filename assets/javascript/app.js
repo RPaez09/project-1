@@ -106,7 +106,7 @@ var app = {
   newsModule : {
 
     apiKey: apiKey.news,
-    baseURL: "https://newsapi.org/v2/everything?q=", 
+    baseURL: "https://newsapi.org/v2/everything?language=en&q=", 
 
     topics: [
     "bitcoin",
@@ -132,6 +132,7 @@ var app = {
         const topic = $(this).text().toLowerCase();
         app.newsModule.artDisplay(topic);
         app.aniModule.renderScreen(topic);
+        console.log(topic, "screen render");
 
       });
 
@@ -140,9 +141,9 @@ var app = {
     artGet: function(topic) {
 
       const toDate = moment().format("YYYY-MM-DD"),
-            fromDate = moment().subtract(12, "days").format("YYYY-MM-DD");
+            fromDate = moment().subtract(14, "days").format("YYYY-MM-DD");
 
-      const queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&sortBy=popularity&pageSize=10&apiKey=" + app.newsModule.apiKey;
+      const queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&sortBy=relevancy&pageSize=10&apiKey=" + app.newsModule.apiKey;
 
       $.ajax({
         url: queryURL,
@@ -155,7 +156,9 @@ var app = {
           value: x
         });
 
-
+        if(topic === "bitcoin") {
+          app.newsModule.artDisplay("bitcoin");
+        }
 
       }).fail(function(err) {
         throw err;
@@ -184,8 +187,8 @@ var app = {
 
       }); 
 
-      let pSrc = $("<p>").html("<em>Articles provided by Newsapi.org</em>");
-      $("#articles").append(pSrc);
+      let divSrc = $("<div>").addClass("container").html("<p><em>Articles provided by Newsapi.org</em></p>");
+      $("#articles").append(divSrc);
 
     }
 
@@ -228,6 +231,7 @@ var app = {
         app.chatModule.socket.on('chat message', function (msg) {
           $('#messages').append($('<li>').html( app.chatModule.parseMessage( msg ) ));
           $('#message-display').scrollTop(9999999);
+          app.aniModule.quickRender(app.aniModule.currPreset);
         });
 
       }
@@ -236,68 +240,33 @@ var app = {
 
   aniModule: {
 
+    currPreset: "bitcoin",
+
     presets: {
 
-      default: {
-        primary: "f7931a",
-        secondary: "4d4d4d",
-        tertiary: "F0F0F0",
-        quaternary: "FFFFFF",
-        navText: "",
-        mainText: "",
-        altChatText: "",
-        userText: ""
-      },
-
       bitcoin: {
-        primary: "f7931a",
-        secondary: "4d4d4d",
-        tertiary: "F0F0F0",
-        quaternary: "FFFFFF",
-        navText: "",
-        mainText: "",
-        altChatText: "",
-        userText: ""
+        primary: "#f7931a",
+        secondary: "#4d4d4d"
       },
 
       ethereum: {
-        primary: "3C3C3D",
-        secondary: "C99D66",
-        tertiary: "ECF0F1",
-        quaternary: "FFFFFF",
-        navText: "",
-        mainText: "",
-        altChatText: "",
-        userText: ""
+        primary: "#3C3C3D",
+        secondary: "#C99D66"
       },
 
       ripple: {
-        primary: "007a7b",
-        secondary: "0084a6",
-        tertiary: "90dbcc",
-        quaternary: "d4fff6",
-        navText: "",
-        mainText: "",
-        altChatText: "",
-        userText: ""
+        primary: "#007a7b",
+        secondary: "#d4fff6"
       },
 
       dogecoin: {
-        primary: "e1b303",
-        secondary: "000000",
-        tertiary: "eeeeee",
-        quaternary: "cb9800",
-        navText: "",
-        mainText: "",
-        altChatText: "",
-        userText: ""
+        primary: "#e1b303",
+        secondary: "#000000"
       },
       
     },
 
     init: function() {
-
-      console.log("Animation Module loaded");
 
       app.aniModule.renderScreen("start");
 
@@ -307,17 +276,21 @@ var app = {
 
       if(x === "start") {
 
-        console.log("no welcome screen yet present, default color scheme already in place");
+        console.log("Bitcoin color scheme already in place");
 
       } else if(app.aniModule.presets[x] != undefined) {
 
-        console.log(x, "running screen render");
+        app.aniModule.currPreset = x;
 
-        $("body").attr("style", "background-color: #" + app.aniModule.presets[x].tertiary + ";");
-        $(".navbar").attr("style", "background-color: #" + app.aniModule.presets[x].primary + ";");
-        $(".section").attr("style", "background-color: #" + app.aniModule.presets[x].quaternary + ";");
-        $("#messages li:nth-child(odd)").attr("style", "background-color: #" + app.aniModule.presets[x].secondary + "; color: #" + app.aniModule.presets[x].primary + ";");
-        $("#footer").attr("style", "background-color: #" + app.aniModule.presets[x].primary + ";");
+        const a = $("header"),
+              b = $("#messages li:nth-child(odd)"),
+              c = $("#footer");
+
+        TweenLite.to(a, 1, {backgroundColor: app.aniModule.presets[x].primary});
+        TweenLite.to(b, 1, {backgroundColor: app.aniModule.presets[x].primary,
+                            color: app.aniModule.presets[x].secondary});
+        TweenLite.to(c, 1, {backgroundColor: app.aniModule.presets[x].primary,
+                            color: app.aniModule.presets[x].secondary});
 
       } else {
 
@@ -326,7 +299,11 @@ var app = {
 
       }
 
-    } 
+    },
+
+    quickRender: function(x) {
+      $("#messages li:nth-child(odd)").attr("style", "background-color: " + app.aniModule.presets[x].primary + "; color: " + app.aniModule.presets[x].secondary + ";");
+    }
 
   },
 

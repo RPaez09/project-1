@@ -196,8 +196,8 @@ li {
 }
 
 #messages li:nth-child(odd) {
-  background: #4d4d4d;
-  color: #f7931a;
+  background: #f7931a;
+  color: #4d4d4d;
 }
 
 .send-message-wrapper {
@@ -243,6 +243,7 @@ form {
 
 #footer {
   min-height: 300px;
+  color: #4d4d4d;
   background-color: #f7931a;
 }
 
