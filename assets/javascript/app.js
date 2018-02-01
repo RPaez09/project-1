@@ -40,8 +40,8 @@ var app = {
         method: "GET"
       }).then(function(result) {
 
-      app.priceHistoryModule.data = result;
-      app.priceHistoryModule.renderPrices();
+        app.priceHistoryModule.data = result;
+        app.priceHistoryModule.renderPrices();
 
       }).fail(function(err) {
         throw err;
@@ -97,23 +97,83 @@ var app = {
   },
 
   pollModule : {
-
-    init: function () {
-      console.log("Poll Module loaded");
+    pollState:0,
+    init:function () {
+      var fbConfig = {
+      apiKey: apiKey.firebase,
+      authDomain: "test-project-59866.firebaseapp.com",
+      databaseURL: "https://test-project-59866.firebaseio.com",
+      projectId: "test-project-59866",
+      storageBucket: "test-project-59866.appspot.com",
+      messagingSenderId: "766361558341"
     }
-  },
+      firebase.initializeApp(fbConfig);
+      var db = firebase.database(); 
+      var voted = [];     
+      db.ref().on('value',function(snapshot){
+        app.pollModule.pollState = snapshot.val();
+        //console.log(app.pollModule.pollState);
+        app.pollModule.renderPolls(app.pollModule.pollState)
+        voted=snapshot.child('voted').val()
+        if (voted.indexOf(app.userModule.username)>=0){$('#pollForm').hide(); $('#poll-chart').show('200');}
+        else{$('#poll-chart').hide();}
+      });
+      $('#pollForm').submit(function(event){
+        event.preventDefault();
+        voted.push(app.userModule.username)
+        db.ref('voted').set(voted);
+        var vote = $('input[name=vote]:checked', this).val();
+        console.log(vote);
+        app.pollModule.pollState[vote]++;
+        db.ref().set(app.pollModule.pollState);              
+      });
 
-  newsModule : {
+    },
 
+    renderPolls: function (state) {
+
+      var data = {
+       labels: ["Bitcoin","Doge","Ripple","Ethereum"],
+       values: Object.getOwnPropertyNames(state).map(x => state[x]),
+       type:'pie'
+     };
+     data = [data];
+
+     var layout = {
+      title: "Curent Polls",
+      showlegend: true,
+      height: 290,
+      width:350,
+      autosize: true,
+      margin: { t: 30 , l: 50 , r: 20 , b: 50 }
+    }
+
+    var options = {
+      displayModeBar: false,
+      scrollZoom: false
+    }
+
+    Plotly.newPlot( 'poll-chart', data , layout , options );
+  }
+
+<<<<<<< HEAD
     apiKey: apiKey.news,
     baseURL: "https://newsapi.org/v2/everything?language=en&q=", 
+=======
+},
+>>>>>>> upstream/master
 
-    topics: [
-    "bitcoin",
-    "ethereum",
-    "ripple",
-    "dogecoin"
-    ],
+newsModule : {
+
+  apiKey: apiKey.news,
+  baseURL: "https://newsapi.org/v2/everything?q=", 
+
+  topics: [
+  "bitcoin",
+  "ethereum",
+  "ripple",
+  "dogecoin"
+  ],
 
     // stores articles pulled from ajax call as properties under the topic name
     articles: {},
@@ -175,11 +235,12 @@ var app = {
       arrX.forEach(function(article) {
 
         let div = $("<div>").addClass("container article"),
-            h4 = $("<h4>").text(article.title),
-            img = $("<img>").addClass("img_article").attr("src", article.urlToImage),
-            pAuth = $("<p>").text(article.author),
-            pBod = $("<p>").html('<em>' + article.description + '</em>'),
-            a = $("<a>").addClass("art_link").attr("href", article.url).attr("target", "_blank").text("Link to article");
+
+        h4 = $("<h4>").text(article.title),
+        img = $("<img>").addClass("img_article").attr("src", article.urlToImage),
+        pAuth = $("<p>").text(article.author),
+        pBod = $("<p>").html('<em>' + article.description + '</em>'),
+        a = $("<a>").addClass("art_link").attr("href", article.url).attr("target", "_blank").text("Link to article");
 
         div.append(h4).append(img).append(pAuth).append(pBod).append(a);
 
@@ -203,7 +264,8 @@ var app = {
     },
 
     init: function () {
-      $('form').submit(function () { // hook the chat form submit
+      $('#chatForm').submit(function (event) { // hook the chat form submit
+        event.preventDefault();
         var newMessage = $('#m').val();
 
         if (newMessage != '') {

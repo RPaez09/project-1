@@ -156,6 +156,10 @@ li {
   padding: 10px 16px;
 }
 
+.svg-container{
+  margin:auto !important;
+}
+
 .article {
   border-bottom: 2px solid #4d4d4d;
   margin-bottom: 20px;
@@ -174,6 +178,7 @@ li {
 .art_link {
   color: #0E827C;
 }
+
 
 #m, #nickname-input {
   height: 35px;
@@ -200,7 +205,7 @@ li {
   color: #4d4d4d;
 }
 
-.send-message-wrapper {
+.send-message-wrapper,.vote-wrapper {
   position: absolute;
   bottom: 15px;
   width: 100%;
@@ -226,7 +231,7 @@ button.accept:hover {
   overflow-y: scroll; 
 }
 
-form input {
+#m {
   width: 80%;
   margin-right: 2.083%;
 }
@@ -235,7 +240,7 @@ form button {
   width: 15%;
 }
 
-form {
+.chatForm {
   padding-left: 1.667%;
   padding-right: 1.667%;
   margin-left: 2.5%;

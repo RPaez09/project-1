@@ -70,10 +70,6 @@ app.get('/api/history/:currency' , function(req,res){
 
 io.on('connection', function(socket){
 	console.log('a user connected');
-	//console.log(Message.find({}).sort({_id:1}).limit(50));
-});
-
-io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 
 		// Using our Message model, create a new entry
@@ -91,16 +87,15 @@ io.on('connection', function(socket){
          console.log(doc);
        }
      });
+
+     io.emit('chat message', msg);
 		
-	});
-});
-io.on('connection', function(socket){
-	socket.on('chat message', function(msg){
-		io.emit('chat message', msg);
-	});
+	});	
 });
 
 http.listen(process.env.PORT  || 8080, function(){
-	console.log('listening on *:8080');
+	console.log('listening on :8080');
 });
+
+
 

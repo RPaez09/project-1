@@ -84,6 +84,7 @@
     <!-- <nav class="navbar navbar-expand-md navbar-expand-lg navbar-inverse">
         <a> <img src="assets/images/crypto.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
             <strong>Crypto ClashBoard</strong></a>
+
         <span style="float:right">
             <a href="#" class="topic-tab" data-coin="BTC">Bitcoin</a>
             <a href="#" class="topic-tab" data-coin="ETH">Ethereum</a>
@@ -101,84 +102,108 @@
                     <div id="price-chart"></div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div id="poll" class="section section-poll">
-                    <h3 class="section-header">Poll</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="section section-articles">
-                    <h3 class="section-header">News</h3>
-                    <div id="articles"></div><!-- render articles here -->     
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div id="chat" class="section section-chat">
-                    <div class="section-header">Chat</div>
-                    <div id="message-display">
-                        <ul id="messages"></ul>
+                <div class="col-md-5">
+                    <div id="poll" class="section section-poll">
+                        <h3 class="section-header">Poll</h3>
+                        <div id="poll-chart"></div>
+                        <div class="vote-wrapper">
+                            <form id='pollForm'>
+                                <p>Vote for your favorite Cryptocurrency:</p>
+                                <div>
+                                    <input type="radio" class="sel" id="BTCVote"
+                                    name="vote" value="BTC">
+                                    <label for="BTCVote">Bitcoin</label>
+                                    <input type="radio" class="sel" id="ETHVote"
+                                    name="vote" value="ETH">
+                                    <label for="ETHVote">Etehereum</label>
+                                    <input type="radio" class="sel" id="RIPVote"
+                                    name="vote" value="RIP">
+                                    <label for="RIPVote">Ripple</label>
+                                    <input type="radio" class="sel" id="DOGVote"
+                                    name="vote" value="DOG">
+                                    <label for="DOGVote">Dogecoin</label>
+                                </div>
+                                <div>
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="send-message-wrapper">
-                        <form action="">
-                            <input id="m" autocomplete="off" placeholder="Chat message" />
-                            <button class="accept chat-button">Send</button>
-                        </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="section section-articles">
+                        <h3 class="section-header">News</h3>
+                        <div id="articles"></div><!-- render articles here -->     
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div id="chat" class="section section-chat">
+                        <div class="section-header">Chat</div>
+                        <div id="message-display">
+                            <ul id="messages"></ul>
+                        </div>
+                        <div class="send-message-wrapper">
+                            <form id="chatForm">
+                                <input id="m" autocomplete="off" placeholder="Chat message" />
+                                <button class="accept chat-button">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end chat column-->
+            </div>
+            <!--end bottom row-->
+
+        </div>
+        <!--end main content container-->
+        <!-- Footer down here -->
+        <div class="container-fluid" id="footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="footer-brand"> CryptoClash Dashboard </h1>
+                </div>
+            </div>
+            <div class="row credits">
+                <div class="col-md-3 dev-box">Richard Paez
+                    <a href="https://github.com/RPaez09" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+                <div class="col-md-3 dev-box">Alex Florian-Prescott
+                    <a href="https://github.com/EPluribusAlex" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+                <div class="col-md-3 dev-box">Tony Gottschalk
+                    <a href="https://github.com/t-gottschalk" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+                <div class="col-md-3 dev-box">Harris Joseph
+                    <a href="https://github.com/HarryCaveMan" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Modal -->
+        <div class="modal fade" id="welcome-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Welcome to CryptoClash - Choose a nickname</h5>
+                    </div>
+                    <div class="modal-body">
+                        <input id="nickname-input" type="text" autocomplete="off" placeholder="Nickname">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="accept modal-accept">Continue</button>
                     </div>
                 </div>
             </div>
-            <!--end chat column-->
         </div>
-        <!--end bottom row-->
+    </body>
 
-    </div>
-    <!--end main content container-->
-    <!-- Footer down here -->
-    <div class="container-fluid" id="footer">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="footer-brand"> CryptoClash Dashboard </h1>
-            </div>
-        </div>
-        <div class="row credits">
-            <div class="col-md-3 dev-box">Richard Paez
-                <a href="https://github.com/RPaez09" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
-            </div>
-            <div class="col-md-3 dev-box">Alex Florian-Prescott
-                <a href="https://github.com/EPluribusAlex" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
-            </div>
-            <div class="col-md-3 dev-box">Tony Gottschalk
-                <a href="https://github.com/t-gottschalk" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
-            </div>
-            <div class="col-md-3 dev-box">Harris Joseph
-                <a href="https://github.com/HarryCaveMan" target="_blank" class="pro-box github"><i class="fa fa-github" aria-hidden="true"></i>Github</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Welcome Modal -->
-    <div class="modal fade" id="welcome-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Welcome to CryptoClash - Choose a nickname</h5>
-            </div>
-            <div class="modal-body">
-                <input id="nickname-input" type="text" autocomplete="off" placeholder="Nickname">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="accept modal-accept">Continue</button>
-            </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script> <!-- jQuery -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> <!--Bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> <!--socket io-->
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script><!--firebase-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.2/d3.min.js"></script><!-- D3 -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script><!-- plotly -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script><!-- GSAP -->
@@ -187,4 +212,4 @@
 <script src="assets/javascript/config.js"></script>
 <script src="assets/javascript/app.js"></script>
 
-</html>
+    </html>
