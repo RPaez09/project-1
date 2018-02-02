@@ -162,7 +162,8 @@ var app = {
       }
 
       Plotly.newPlot( 'poll-chart', data , layout , options );
-      $("#poll-header").append('<em style="margin-left: 20px; font-size: 15px;">' + app.pollModule.pollName + '</em>');
+
+      $("#poll-header").html('Poll<em style="margin-left: 20px; font-size: 15px;">' + app.pollModule.pollName + '</em>');
     }
  
   },
