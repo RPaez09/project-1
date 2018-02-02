@@ -55,6 +55,7 @@
                     <div id="price-chart"></div>
                 </div>
             </div>
+
             <div class="col-md-5">
                 <div id="poll" class="section section-poll">
                     <h3 class="section-header" id="poll-header">Poll</h3>
@@ -63,17 +64,17 @@
                         <form id='pollForm'>
                             <p>Vote for your favorite Cryptocurrency:</p>
                             <div>
-                                <input type="radio" class="sel" id="BTCVote" name="vote" value="BTC">
+                                <input type="radio" class="sel" id="bitcoin" name="vote" value="BTC">
                                 <label for="BTCVote">Bitcoin</label>
-                                <input type="radio" class="sel" id="ETHVote" name="vote" value="ETH">
+                                <input type="radio" class="sel" id="ethereum" name="vote" value="ETH">
                                 <label for="ETHVote">Ethereum</label>
-                                <input type="radio" class="sel" id="RIPVote" name="vote" value="RIP">
+                                <input type="radio" class="sel" id="ripple" name="vote" value="RPX">
                                 <label for="RIPVote">Ripple</label>
-                                <input type="radio" class="sel" id="DOGVote" name="vote" value="DOG">
+                                <input type="radio" class="sel" id="dogecoin" name="vote" value="DOGE">
                                 <label for="DOGVote">Dogecoin</label>
                             </div>
                             <div>
-                                <button type="submit">Submit</button>
+                                <button class="accept vote" type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -167,6 +168,7 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <!-- plotly -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TimelineLite.min.js"></script>
 <!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <!-- moment.js -->

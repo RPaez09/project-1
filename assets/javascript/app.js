@@ -115,10 +115,10 @@ var app = {
       db.ref().on('value',function(snapshot){
         app.pollModule.pollState = snapshot.val();
         //console.log(app.pollModule.pollState);
-        app.pollModule.renderPolls(app.pollModule.pollState)
-        voted=snapshot.child('voted').val()
+        app.pollModule.renderPolls(app.pollModule.pollState);
+        voted=snapshot.child('voted').val();
         if (voted.indexOf(app.userModule.username)>=0){$('#pollForm').hide(); $('#poll-chart').show('200');}
-        else{$('#poll-chart').hide();}
+        else{$('#poll-chart').hide(); $('#pollForm').show('200');}
       });
       $('#pollForm').submit(function(event){
         event.preventDefault();
@@ -126,8 +126,15 @@ var app = {
         db.ref('voted').set(voted);
         var vote = $('input[name=vote]:checked', this).val();
         console.log(vote);
+        app.aniModule.renderScreen($('input[name=vote]:checked', this).attr('id'));
+        app.priceHistoryModule.activeCurrency=vote;
+        app.priceHistoryModule.getPrices();
         app.pollModule.pollState[vote]++;
         db.ref().set(app.pollModule.pollState);              
+      });
+
+      $(document).ready(function (){
+        app.pollModule.renderPolls(app.pollModule.pollState);
       });
 
     },
@@ -135,7 +142,7 @@ var app = {
     renderPolls: function (state) {
 
       var data = {
-       labels: ["Bitcoin","Doge","Ethereum","Ripple"],
+       labels: ["Bitcoin","Dogecoin","Ethereum","Ripple"],
        values: Object.getOwnPropertyNames(state).map(x => state[x]),
        type:'pie'
       };
@@ -145,9 +152,8 @@ var app = {
         title: "Current Polls",
         showlegend: true,
         height: 290,
-        width:350,
         autosize: true,
-        margin: { t: 30 , l: 50 , r: 20 , b: 50 }
+        margin: { t: 30 , l: 50 , r: 20 , b: 40 }
       }
 
       var options = {
@@ -263,7 +269,7 @@ var app = {
     socket : io(),
 
     parseMessage : function( msg ){
-      return '<strong>'+ msg.name +':</strong> ' + msg.message
+      return '<strong class="chat-user">'+ msg.name +':</strong> <span class="chat-message">' + msg.message + '</span>'
     },
 
     init: function () {
@@ -396,6 +402,13 @@ var app = {
     this.newsModule.init();
     this.chatModule.init();
     this.aniModule.init();
+
+    var tl = new TimelineLite();
+
+    tl.add( TweenLite.from( $('.section-ticker')  , .5, { ease: Power2.easeInOut , y: 50, opacity: 0 , delay: 0.4 } ) );
+    tl.add( TweenLite.from( $('.section-poll')    , .5, { ease: Power2.easeInOut , y: 50, opacity: 0 }, "-=0.7" ) );
+    tl.add( TweenLite.from( $('.section-articles'), .5, { ease: Power2.easeInOut , y: 50, opacity: 0 }, "-=0.7" ) );
+    tl.add( TweenLite.from( $('.section-chat')    , .5, { ease: Power2.easeInOut , y: 50, opacity: 0 }, "-=0.7" ) );
 
   }
 

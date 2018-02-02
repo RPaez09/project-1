@@ -117,7 +117,7 @@ li {
   color: #4d4d4d;
 }
 
-.send-message-wrapper,.vote-wrapper {
+.send-message-wrapper {
   position: absolute;
   bottom: 8px;
   width: 100%;
@@ -151,8 +151,16 @@ button.accept.article-btn {
   padding: 6px 15px;
 }
 
+button.accept.vote {
+  margin-top: 20px;
+}
+
 button.accept:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.vote-wrapper {
+  padding-left: 15px;
 }
 
 #message-display {
@@ -165,6 +173,11 @@ button.accept:hover {
 #m {
   width: 80%;
   margin-right: 2.083%;
+}
+
+.chat-message , .chat-user {
+  font-size: 16px;
+  letter-spacing: normal;
 }
 
 form button {
