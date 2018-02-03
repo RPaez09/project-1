@@ -17,9 +17,13 @@ var app = {
             app.userModule.username = input;
             localStorage.setItem('cryptoClash-name' , input); // saving username
             $('#welcome-modal').modal('hide');
+            $('#main-app').css('opacity','1');
           }
 
         });
+      }
+      else if(this.username){
+        $('#main-app').css('opacity','1');
       }
 
     }
@@ -115,9 +119,13 @@ var app = {
       db.ref().on('value',function(snapshot){
         app.pollModule.pollState = snapshot.val();
         //console.log(app.pollModule.pollState);
-        app.pollModule.renderPolls(app.pollModule.pollState);
+        
         voted=snapshot.child('voted').val();
-        if (voted.indexOf(app.userModule.username)>=0){$('#pollForm').hide(); $('#poll-chart').show('200');}
+        if (voted.indexOf(app.userModule.username)>=0){
+          $('#pollForm').hide(); 
+          $('#poll-chart').show();
+          app.pollModule.renderPolls(app.pollModule.pollState)
+        }
         else{$('#poll-chart').hide(); $('#pollForm').show('200');}
       });
       $('#pollForm').submit(function(event){
@@ -130,12 +138,17 @@ var app = {
         app.priceHistoryModule.activeCurrency=vote;
         app.priceHistoryModule.getPrices();
         app.pollModule.pollState[vote]++;
+        app.pollModule.renderPolls(app.pollModule.pollState);
         db.ref().set(app.pollModule.pollState);              
       });
 
       $(document).ready(function (){
         app.pollModule.renderPolls(app.pollModule.pollState);
       });
+      $(window).on('resize' , function(){
+        app.pollModule.renderPolls(app.pollModule.pollState);
+      });
+
 
     },
 
