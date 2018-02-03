@@ -156,6 +156,14 @@ var app = {
       var data = {
        labels: ["Bitcoin","Dogecoin","Ethereum","Ripple"],
        values: Object.getOwnPropertyNames(state).map(x => state[x]),
+       textfont:{
+        //family: 'Arial',
+        //size:'1',
+        color: 'rgb(136,135,136)'
+      },
+       marker: {
+           colors: ['rgb(247,147,26)','rgb(225,179,3)','rgb(60,60,61)','rgb(0,122,123)']
+       },
        type:'pie'
       };
       data = [data];
