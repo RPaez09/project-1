@@ -359,7 +359,8 @@ var app = {
               c = $("#footer"),
               d = $(".navbar-brand"),
               e = $(".nav-link.topic-tab"),
-              f = $(".section-header");
+              f = $(".section-header")
+              g = $("button");
               
         TweenMax.to(a, 1, {
           backgroundColor: app.aniModule.presets[x].primary,
@@ -379,6 +380,9 @@ var app = {
         TweenMax.to(f, 1, {
           backgroundColor: app.aniModule.presets[x].primary,
           color: app.aniModule.presets[x].secondary });
+        TweenMax.to(g, 1, {
+          backgroundColor: app.aniModule.presets[x].primary,
+          color: app.aniModule.presets[x].secondary }); 
 
       } else {
 
