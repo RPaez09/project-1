@@ -181,7 +181,7 @@ var app = {
   newsModule : {
 
     apiKey: apiKey.news,
-    baseURL: "https://newsapi.org/v2/everything?language=en&q=", 
+    baseURL: "https://newsapi.org/v2/everything?q=", 
 
     topics: [
     "bitcoin",
@@ -190,34 +190,135 @@ var app = {
     "dogecoin"
     ],
 
-    // stores articles pulled from ajax call as properties under the topic name
-    articles: {},
+    queries: [
+    "wkRel",
+    "wkPop",
+    "mnthRel",
+    "mnthPop"
+    ],
+
+    // stores articles pulled from ajax call as properties under the topic name, organized by search query type
+    articles: {
+      wkRel: {},
+      wkPop: {},
+      mnthRel: {},
+      mnthPop: {}
+    },
+
+    currQuery: "wkRel",
+    currTopic: "bitcoin",
 
     init: function () {
 
-      app.newsModule.topics.forEach(function(item) {
-
-        app.newsModule.artGet(item);
-
+      app.newsModule.topics.forEach(function(a) {
+        app.newsModule.queries.forEach(function(b) {
+          app.newsModule.artGet(a, b);
+        });
       });
 
       // listens for topic link selection, then renders appropriate articles
       $(".topic-tab").on("click", function() {
 
-        const topic = $(this).text().toLowerCase();
-        app.newsModule.artDisplay(topic);
-        app.aniModule.renderScreen(topic);
-        console.log(topic, "screen render");
+        app.newsModule.currTopic = $(this).text().toLowerCase();
+        app.newsModule.artDisplay(app.newsModule.currTopic, app.newsModule.currQuery);
+        app.aniModule.renderScreen(app.newsModule.currTopic);
+
+      });
+
+      // listens for change in article search preferences
+      $(".dropdown-item").on("click", function() {
+
+        const newSel = $(this).text();
+
+        if(newSel === "Most Relevant" || newSel === "Most Popular") {
+
+          $("#dropdownMenuButton1").html('<em>' + newSel + '</em>');
+
+          switch(app.newsModule.currQuery) {
+            case "wkRel":
+              if(newSel === "Most Popular") {
+                app.newsModule.currQuery = "wkPop";
+              }
+              break;
+            case "wkPop":
+              if(newSel === "Most Relevant") {
+                app.newsModule.currQuery = "wkRel";
+              }
+              break;
+            case "mnthRel":
+              if(newSel === "Most Popular") {
+                app.newsModule.currQuery = "mnthPop";
+              }
+              break;
+            case "mnthPop":
+              if(newSel === "Most Relevant") {
+                app.newsModule.currQuery = "mnthRel";
+              }
+              break;
+          }
+
+        } else {
+
+          $("#dropdownMenuButton2").html('<em>' + newSel + '</em>');
+
+          switch(app.newsModule.currQuery) {
+            case "wkRel":
+              if(newSel === "Last Month") {
+                app.newsModule.currQuery = "mnthRel";
+              }
+              break;
+            case "wkPop":
+              if(newSel === "Last Month") {
+                app.newsModule.currQuery = "mnthPop";
+              }
+              break;
+            case "mnthRel":
+              if(newSel === "Last Week") {
+                app.newsModule.currQuery = "wkRel";
+              }
+              break;
+            case "mnthPop":
+              if(newSel === "Last Week") {
+                app.newsModule.currQuery = "wkPop";
+              }
+              break;
+          }
+
+        }
+
+        app.newsModule.artDisplay(app.newsModule.currTopic, app.newsModule.currQuery);
 
       });
 
     },
 
-    artGet: function(topic) {
+    artGet: function(topic, query) {
+
+      let time, interval, sort;
+
+      if(query === "wkRel") {
+        time = 7;
+        interval = "days";
+        sort = "relevancy";
+      } else if(query === "wkPop") {
+        time = 7;
+        interval = "days";
+        sort = "popularity";
+      } else if(query === "mnthRel") {
+        time = 1;
+        interval = "months";
+        sort = "relevancy";
+      } else if(query === "mnthPop") {
+        time = 1;
+        interval = "months";
+        sort = "popularity";
+      } else {
+        console.log("query error");
+      }
 
       const toDate = moment().format("YYYY-MM-DD"),
-            fromDate = moment().subtract(14, "days").format("YYYY-MM-DD");
-            queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&sortBy=relevancy&pageSize=10&apiKey=" + app.newsModule.apiKey;
+            fromDate = moment().subtract(time, interval).format("YYYY-MM-DD");
+            queryURL = app.newsModule.baseURL + topic + "$from=" + fromDate + "&to=" + toDate + "&language=en&sortBy=" + sort + "&pageSize=10&apiKey=" + app.newsModule.apiKey;
 
       $.ajax({
         url: queryURL,
@@ -226,12 +327,12 @@ var app = {
 
         const x = result.articles;
 
-        Object.defineProperty(app.newsModule.articles, topic, {
+        Object.defineProperty(app.newsModule.articles[query], topic, {
           value: x
         });
 
-        if(topic === "bitcoin") {
-          app.newsModule.artDisplay("bitcoin");
+        if(topic === app.newsModule.currTopic && query === app.newsModule.currQuery) {
+          app.newsModule.artDisplay(topic, query);
         }
 
       }).fail(function(err) {
@@ -240,9 +341,9 @@ var app = {
 
     },
 
-    artDisplay: function(x) {
+    artDisplay: function(topic, query) {
 
-      const arrX = app.newsModule.articles[x];
+      const arrX = app.newsModule.articles[query][topic];
 
       $("#articles").empty();
 
@@ -369,7 +470,8 @@ var app = {
               c = $("#footer"),
               d = $(".navbar-brand"),
               e = $(".nav-link.topic-tab"),
-              f = $(".section-header");
+              f = $(".section-header")
+              g = $(".dropdown-toggle");
               
         TweenMax.to(a, 1, {
           backgroundColor: app.aniModule.presets[x].primary,
@@ -389,6 +491,9 @@ var app = {
         TweenMax.to(f, 1, {
           backgroundColor: app.aniModule.presets[x].primary,
           color: app.aniModule.presets[x].secondary });
+        TweenMax.to(g, 0.5, {
+          backgroundColor: app.aniModule.presets[x].primary,
+          color: app.aniModule.presets[x].secondary }); 
 
       } else {
 

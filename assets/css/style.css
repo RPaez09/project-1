@@ -71,6 +71,22 @@ li {
   line-height: 30px;
 }
 
+#news-head {
+  float: left;
+}
+
+#dropdownMenuButton1 {
+  float: right;
+  background-color: #f7931a;
+  color: #4d4d4d;
+}
+
+#dropdownMenuButton2 {
+  float: right;
+  background-color: #f7931a;
+  color: #4d4d4d;
+}
+
 .svg-container{
   margin:auto !important;
 }
@@ -84,6 +100,7 @@ li {
 #articles {
   max-height: 295px;
   overflow-y: scroll;
+  clear: both;
 }
 
 .article-img {
